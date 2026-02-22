@@ -1,0 +1,41 @@
+A number is called digitorial if the sum of the factorials of its digits is equal to the number itself.
+Determine whether any permutation of n (including the original order) forms a digitorial number.
+Return true if such a permutation exists, otherwise return false.
+
+class Solution {
+    static int factorial(int x){
+        if(x==0 || x==1)
+             return 1;
+        int p=1;
+        while(x>0){
+            p*=x;
+            x=x-1;
+        }
+        return p;
+    }
+    static boolean SameDigits(int a,int b ){
+        int[] count=new int[10];
+        while(a>0){
+            count[a%10]++;
+            a/=10;
+        }
+        while(b>0){
+            count[b%10]--;
+            b/=10;
+        }
+        for(int c:count){
+            if(c!=0)
+                 return false;
+        }
+        return true;
+    }
+    public boolean isDigitorialPermutation(int n) {
+        int s=0,num=n;
+        while(n>0){
+            int rem=n%10;
+            s+=factorial(rem);
+            n=n/10;
+        }
+        return SameDigits(num,s);
+    }
+}
